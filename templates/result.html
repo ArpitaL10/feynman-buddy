@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feynman Buddy – Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section p {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .comparison-block {
+            margin-bottom: 25px;
+        }
+
+        .comparison-block ul {
+            padding-left: 20px;
+        }
+
+        .comparison-block li {
+            margin-bottom: 8px;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .elaborate {
+            color: orange;
+        }
+
+        .missed {
+            color: red;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        a.button:hover {
+            background-color: #2980b9;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Feynman Buddy – Review</h1>
+
+        <div class="section">
+            <h2>🧠 Topic:</h2>
+            <p>{{ topic }}</p>
+        </div>
+
+        <div class="section">
+            <h2>📝 Your Explanation:</h2>
+            <p>{{ explanation }}</p>
+        </div>
+
+        <div class="section">
+            <h2>📚 Wikipedia Summary:</h2>
+            <p>{{ wiki_summary }}</p>
+        </div>
+        <div class="section">
+            <h2>💬 Feedback</h2>
+            <p>{{ feedback }}</p>
+        </div>
+        
+        <div class="section">
+            <h2>📊 Comparison</h2>
+
+            <div class="comparison-block correct">
+                <h3>✅ Correct Points</h3>
+                {% if comparison.correct %}
+                    <ul>
+                        {% for point in comparison.correct %}
+                            <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No correct points detected.</p>
+                {% endif %}
+            </div>
+
+            <div class="comparison-block elaborate">
+                <h3>🟡 Needs Elaboration</h3>
+                {% if comparison.elaborate %}
+                    <ul>
+                        {% for point in comparison.elaborate %}
+                            <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No elaboration suggestions.</p>
+                {% endif %}
+            </div>
+
+            <div class="comparison-block missed">
+                <h3>❌ Missing Points</h3>
+                {% if comparison.missed %}
+                    <ul>
+                        {% for point in comparison.missed %}
+                            <li>👉 {{ point }} (type: {{ point.__class__.__name__ }})</li>
+                        {% endfor %}
+
+                    </ul>
+                {% else %}
+                    <p>No missing points found.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <a class="button" href="/">🔙 Go Back</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feynman Buddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .note {
+            font-size: 13px;
+            color: gray;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Feynman Buddy</h1>
+        <form method="POST" action="/submit">
+            <label for="topic">Topic</label>
+            <input type="text" id="topic" name="topic" placeholder="e.g., Algebra" required>
+
+            <label for="explanation">Your Explanation</label>
+            <textarea id="explanation" name="explanation" rows="6" placeholder="Explain the topic as if you're teaching it..." required></textarea>
+
+              <!-- 🎤 Mic Button -->
+            <button type="button" onclick="startDictation()" style="margin-top: 10px;">🎤 Speak</button>
+
+
+            <div class="note">Try typing or speaking what you understand about the topic. Feynman Buddy will compare it with Wikipedia and give feedback!</div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+function startDictation() {
+    if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('explanation').value += ' ' + transcript;
+        };
+
+        recognition.onerror = function(event) {
+            alert('Speech recognition error: ' + event.error);
+        };
+
+        recognition.start();
+    } else {
+        alert("Your browser doesn't support speech recognition. Try using Google Chrome.");
+    }
+}
+</script>
+
+</html>
